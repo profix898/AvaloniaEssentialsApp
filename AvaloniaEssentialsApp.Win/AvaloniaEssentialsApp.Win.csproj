@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <UseMauiEssentials>true</UseMauiEssentials>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+	  
+    <!-- Needed for Windows App SDK as they don't support Any CPU -->
+    <Platforms>x86;x64;ARM64</Platforms>
+    <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
+    <!-- Needed for .NET RC 1 -->
+    <UseRidGraph>true</UseRidGraph>
+
+    <!-- Needed to enable modern Windows App SDK projects -->
+    <EnableMsixTooling>true</EnableMsixTooling>
+    <WindowsPackageType>None</WindowsPackageType>
+    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <ApplicationId>net.nseapp.windows</ApplicationId>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
+    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Microsoft.Maui.Essentials" Version="8.0.0-rc.1.9171" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AvaloniaEssentialsApp\AvaloniaEssentialsApp.csproj" />
+  </ItemGroup>
+</Project>
